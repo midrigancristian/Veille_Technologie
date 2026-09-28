@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veille — Agrégateur IT</title>
+  <meta name="description" content="Fil d'actualité personnel : Dev, Cybersécurité, SysAdmin, IA." />
+  <link rel="icon" href="static/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="static/styles.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <button class="icon-btn burger" id="burger" aria-label="Menu" type="button">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <a class="brand" href="./" aria-label="Veille">
+      <span class="radar" aria-hidden="true">
+        <span class="radar-ping"></span>
+        <span class="radar-core"></span>
+      </span>
+      <span class="brand-text">
+        <strong>VEILLE</strong>
+        <em>radar IT personnel</em>
+      </span>
+    </a>
+
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2" stroke-linecap="round"/>
+      </svg>
+      <input id="search" type="search" placeholder="Rechercher un article, un outil, une CVE…" autocomplete="off" />
+      <kbd>/</kbd>
+    </div>
+
+    <div class="top-actions">
+      <div class="live" id="live" title="Connexion temps réel">
+        <span class="live-dot"></span>
+        <span class="live-label">live</span>
+      </div>
+      <button class="icon-btn" id="refresh" type="button" title="Synchroniser maintenant (R)">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20 12a8 8 0 1 1-2.2-5.5" stroke-linecap="round"/>
+          <path d="M20 5v5h-5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="chip-btn" id="favToggle" type="button" title="Favoris (F)">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M12 3.4l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.7 6.8 19.4l1-5.8L3.6 9.5l5.8-.8L12 3.4z"/>
+        </svg>
+        <span id="favCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="side-block">
+        <p class="side-label">Filtrer</p>
+        <nav class="cats" id="cats">
+          <button class="cat is-active" data-cat="all" type="button">
+            <span class="cat-ico all"></span>
+            Tous
+            <span class="cat-n" data-n="all">—</span>
+          </button>
+          <button class="cat" data-cat="dev" type="button">
+            <span class="cat-ico dev"></span>
+            Développement
+            <span class="cat-n" data-n="dev">—</span>
+          </button>
+          <button class="cat" data-cat="cyber" type="button">
+            <span class="cat-ico cyber"></span>
+            Cybersécurité
+            <span class="cat-n" data-n="cyber">—</span>
+          </button>
+          <button class="cat" data-cat="sysadmin" type="button">
+            <span class="cat-ico sysadmin"></span>
+            SysAdmin
+            <span class="cat-n" data-n="sysadmin">—</span>
+          </button>
+          <button class="cat" data-cat="ia" type="button">
+            <span class="cat-ico ia"></span>
+            Intelligence artificielle
+            <span class="cat-n" data-n="ia">—</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="side-block">
+        <p class="side-label">Sources</p>
+        <div class="sources" id="sources"></div>
+      </div>
+
+      <div class="side-foot">
+        <p id="syncMeta">Synchronisation…</p>
+        <button class="text-btn" id="markRead" type="button">Tout marquer lu</button>
+      </div>
+    </aside>
+
+    <div class="overlay" id="overlay" hidden></div>
+
+    <main class="feed-wrap">
+      <div class="feed-head">
+        <div>
+          <h1 id="feedTitle">Fil d'actualité</h1>
+          <p class="feed-sub" id="feedSub">Agrégation en cours depuis vos sources IT.</p>
+        </div>
+        <label class="unread-toggle">
+          <input type="checkbox" id="unreadOnly" />
+          <span>Non lus</span>
+        </label>
+      </div>
+
+      <button class="new-banner" id="newBanner" type="button" hidden>
+        <span id="newBannerText">Nouveaux articles</span>
+        <span class="chev">↓</span>
+      </button>
+
+      <ol class="feed" id="feed" aria-live="polite"></ol>
+      <div class="sentinel" id="sentinel"></div>
+      <p class="end" id="endMsg" hidden>Fin du fil — vous êtes à jour.</p>
+      <div class="empty" id="empty" hidden>
+        <div class="empty-radar"></div>
+        <h2>Le radar est silencieux</h2>
+        <p>Aucun article ne correspond à ce filtre. Essayez une autre catégorie ou relancez une sync.</p>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" hidden></div>
+  <script src="static/app.js"></script>
+</body>
+</html>
